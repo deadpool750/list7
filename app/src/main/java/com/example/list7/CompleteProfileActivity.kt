@@ -1,6 +1,7 @@
 package com.example.list7
 
 import android.os.Bundle
+import android.app.DatePickerDialog
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.example.firebaseauthdemo.firebase.FirestoreClass
 import com.example.list7.firebase.User
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class CompleteProfileActivity : AppCompatActivity() {
     private lateinit var nameInput: EditText
@@ -19,6 +21,11 @@ class CompleteProfileActivity : AppCompatActivity() {
     private lateinit var phoneInput: EditText
     private lateinit var addressInput: EditText
     private lateinit var finishButton: Button
+    private lateinit var dobButton: Button
+    private lateinit var dobText: EditText
+    private lateinit var ageText: EditText
+
+    private var selectedDateOfBirth: String = ""
 
     private val auth = FirebaseAuth.getInstance()
     private val firestoreClass = FirestoreClass()
@@ -35,6 +42,9 @@ class CompleteProfileActivity : AppCompatActivity() {
         phoneInput = findViewById(R.id.phoneInput)
         addressInput = findViewById(R.id.addressInput)
         finishButton = findViewById(R.id.finishButton)
+        dobButton = findViewById(R.id.dobButton)
+        dobText = findViewById(R.id.dobText)
+        ageText = findViewById(R.id.ageText)
 
         val userId = auth.currentUser?.uid
 
@@ -60,6 +70,7 @@ class CompleteProfileActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this@CompleteProfileActivity, "User not logged in", Toast.LENGTH_SHORT).show()
         }
+        dobButton.setOnClickListener { openDatePicker() }
 
         finishButton.setOnClickListener {
             if (userId != null) {
@@ -100,5 +111,51 @@ class CompleteProfileActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Toast.makeText(this@CompleteProfileActivity, "Error updating user data: ${e.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+    private fun openDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                selectedDateOfBirth = "$selectedYear-${selectedMonth + 1}-$selectedDay"
+                dobText.setText(selectedDateOfBirth)
+
+                // Calculate and display age
+                val age = calculateAge(selectedDateOfBirth)
+                ageText.setText("Age: $age")
+            },
+            year,
+            month,
+            day
+        )
+
+        // Restrict selection to past dates only
+        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+
+        datePickerDialog.show()
+    }
+    private fun calculateAge(dateOfBirth: String): Int {
+        val parts = dateOfBirth.split("-")
+        if (parts.size != 3) return 0
+
+        val birthYear = parts[0].toInt()
+        val birthMonth = parts[1].toInt()
+        val birthDay = parts[2].toInt()
+
+        val today = Calendar.getInstance()
+        var age = today.get(Calendar.YEAR) - birthYear
+
+        // Adjust age if the current date is before the birthday
+        if (today.get(Calendar.MONTH) < birthMonth - 1 ||
+            (today.get(Calendar.MONTH) == birthMonth - 1 && today.get(Calendar.DAY_OF_MONTH) < birthDay)
+        ) {
+            age--
+        }
+
+        return age
     }
 }
