@@ -59,6 +59,12 @@ class MainActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     //if login is successful show a success message.
                     Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish() // Close MainActivity to prevent going back to it
+
                 } else {
                     //if login fails show the error message from Firebase.
                     Toast.makeText(this, "Login Failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()

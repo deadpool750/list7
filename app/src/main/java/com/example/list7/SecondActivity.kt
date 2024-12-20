@@ -37,6 +37,7 @@ class SecondActivity : AppCompatActivity() {
             val confirmPassword = passwordConfirmEditText.text.toString().trim()
             val isAbove18 = ageSwitch.isChecked
 
+            //ssdsds
             //validating inputs
             if (name.isEmpty()) {
                 showToast("Please enter your name")

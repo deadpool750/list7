@@ -10,18 +10,12 @@
         android:id="@+id/tv_complete_your_profile"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="113dp"
-        android:layout_marginBottom="656dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="27dp"
         android:text="Complete Your Profile"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.876"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/nameInput"
@@ -78,7 +72,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailInput"
         app:layout_constraintVertical_bias="0.0" />
-
 
 
     <EditText
