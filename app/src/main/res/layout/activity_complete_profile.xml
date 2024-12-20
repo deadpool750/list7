@@ -2,15 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/addressInput"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".CompleteProfileActivity">
 
-    <TextView
+    <EditText
         android:id="@+id/tv_complete_your_profile"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginStart="161dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="113dp"
@@ -19,15 +18,15 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.876"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
+    <EditText
         android:id="@+id/nameInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:hint="Name"
         android:textSize="16sp"
@@ -38,10 +37,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.19999999" />
 
-    <TextView
+    <EditText
         android:id="@+id/surnameInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:hint="Surname"
         android:textSize="16sp"
@@ -52,10 +51,10 @@
         app:layout_constraintTop_toBottomOf="@+id/nameInput"
         app:layout_constraintVertical_bias="0.028" />
 
-    <TextView
+    <EditText
         android:id="@+id/emailInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:hint="Email"
         android:textSize="16sp"
@@ -66,24 +65,26 @@
         app:layout_constraintTop_toBottomOf="@+id/surnameInput"
         app:layout_constraintVertical_bias="0.021" />
 
-    <TextView
-        android:id="@+id/textView6"
+    <EditText
+        android:id="@+id/addressInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:hint="Address"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/phoneInput"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailInput"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
+
+
+    <EditText
         android:id="@+id/phoneInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:hint="Phone Number"
         android:textSize="16sp"
@@ -91,7 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/addressInput"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
@@ -103,8 +104,8 @@
         android:text="FINISH"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.532"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneInput"
-        app:layout_constraintVertical_bias="0.142" />
+        app:layout_constraintVertical_bias="0.921" />
 </androidx.constraintlayout.widget.ConstraintLayout>
