@@ -57,6 +57,8 @@ class CompleteProfileActivity : AppCompatActivity() {
                     Toast.makeText(this@CompleteProfileActivity, "Error loading user data: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
+        } else {
+            Toast.makeText(this@CompleteProfileActivity, "User not logged in", Toast.LENGTH_SHORT).show()
         }
 
         finishButton.setOnClickListener {
