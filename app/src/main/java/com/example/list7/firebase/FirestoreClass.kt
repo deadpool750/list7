@@ -29,4 +29,10 @@ class FirestoreClass {
     suspend fun loadUserData(userId: String): Map<String, Any>? {
         return db.collection("users").document(userId).get().await().data
     }
+
+    // Delete user data from Firestore
+    suspend fun deleteUserData(userId: String) {
+        val documentRef = db.collection("users").document(userId)
+        documentRef.delete().await()
+    }
 }

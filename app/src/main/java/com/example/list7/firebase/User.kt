@@ -5,7 +5,8 @@ data class User(
     val surname: String = "",
     val email: String = "",
     val phoneNumber: String = "",
-    val address: String = ""
+    val address: String = "",
+    val dateOfBirth: String = ""
 ) {
     companion object {
         fun fromMap(data: Map<String, Any?>): User {
@@ -14,7 +15,8 @@ data class User(
                 surname = data["surname"] as? String ?: "",
                 email = data["email"] as? String ?: "",
                 phoneNumber = data["phoneNumber"] as? String ?: "",
-                address = data["address"] as? String ?: ""
+                address = data["address"] as? String ?: "",
+                dateOfBirth = data["dateOfBirth"] as? String ?: ""
             )
         }
     }
