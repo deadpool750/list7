@@ -19,6 +19,7 @@ class CompleteProfileActivity : AppCompatActivity() {
     private lateinit var phoneInput: EditText
     private lateinit var addressInput: EditText
     private lateinit var finishButton: Button
+    private lateinit var editButton: Button
 
     private val auth = FirebaseAuth.getInstance()
     private val firestoreClass = FirestoreClass()
@@ -35,6 +36,7 @@ class CompleteProfileActivity : AppCompatActivity() {
         phoneInput = findViewById(R.id.phoneInput)
         addressInput = findViewById(R.id.addressInput)
         finishButton = findViewById(R.id.finishButton)
+        editButton = findViewById(R.id.editButton)
 
         val userId = auth.currentUser?.uid
 
@@ -61,10 +63,16 @@ class CompleteProfileActivity : AppCompatActivity() {
             Toast.makeText(this@CompleteProfileActivity, "User not logged in", Toast.LENGTH_SHORT).show()
         }
 
+        // Toggle edit mode
+        editButton.setOnClickListener {
+            enableEditMode(true)
+        }
+
         finishButton.setOnClickListener {
             if (userId != null) {
                 lifecycleScope.launch {
                     updateUserData(userId)
+                    enableEditMode(false)
                 }
             } else {
                 Toast.makeText(this@CompleteProfileActivity, "User not logged in", Toast.LENGTH_SHORT).show()
@@ -95,10 +103,17 @@ class CompleteProfileActivity : AppCompatActivity() {
         try {
             firestoreClass.updateUserData(userId, updatedData)
             Toast.makeText(this@CompleteProfileActivity, "User data updated successfully", Toast.LENGTH_SHORT).show()
-            setResult(RESULT_OK)
-            finish()
         } catch (e: Exception) {
             Toast.makeText(this@CompleteProfileActivity, "Error updating user data: ${e.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun enableEditMode(enable: Boolean) {
+        nameInput.isEnabled = enable
+        surnameInput.isEnabled = enable
+        emailInput.isEnabled = enable
+        phoneInput.isEnabled = enable
+        addressInput.isEnabled = enable
+        finishButton.isEnabled = enable
     }
 }
