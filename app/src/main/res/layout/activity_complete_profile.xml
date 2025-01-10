@@ -10,8 +10,8 @@
         android:id="@+id/tv_complete_your_profile"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="44dp"
         android:cursorVisible="false"
         android:focusable="false"
         android:text="Complete Your Profile"
@@ -24,54 +24,54 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:enabled="false"
         android:hint="Name"
         android:textSize="16sp"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintVertical_bias="0.154" />
 
     <EditText
         android:id="@+id/surnameInput"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:enabled="false"
         android:hint="Surname"
         android:textSize="16sp"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameInput"
-        app:layout_constraintVertical_bias="0.028" />
+        app:layout_constraintVertical_bias="0.002" />
 
     <EditText
         android:id="@+id/emailInput"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:enabled="false"
         android:hint="Email"
         android:textSize="16sp"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/surnameInput"
-        app:layout_constraintVertical_bias="0.021" />
+        app:layout_constraintVertical_bias="0.004" />
 
     <EditText
         android:id="@+id/addressInput"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:enabled="false"
         android:hint="Address"
         android:textSize="16sp"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -84,9 +84,9 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:enabled="false"
         android:hint="Phone Number"
         android:textSize="16sp"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -94,41 +94,81 @@
         app:layout_constraintTop_toBottomOf="@+id/addressInput"
         app:layout_constraintVertical_bias="0.0" />
 
-    <!--<Button
-        android:id="@+id/finishButton"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="286dp"
-        android:layout_marginBottom="24dp"
-        android:text="SAVE"
-        android:enabled="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneInput"
-        app:layout_constraintVertical_bias="0.921" />-->
-
     <Button
         android:id="@+id/editButton"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="376dp"
-        android:text="EDIT"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:layout_width="190dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="13dp"
+        android:text="EDIT USER INFO"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_complete_your_profile" />
+        app:layout_constraintTop_toBottomOf="@+id/phoneInput" />
 
     <Button
         android:id="@+id/finishButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="159dp"
+        android:layout_width="107dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginBottom="4dp"
         android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/dobButton"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="98dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="105dp"
+        android:text="EDIT DATE OF BIRTH"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ageText" />
+
+    <EditText
+        android:id="@+id/dobText"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="72dp"
+        android:text="Selected Date: "
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneInput" />
+
+    <EditText
+        android:id="@+id/ageText"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:text="Your Age:"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editButton" />
+        app:layout_constraintTop_toBottomOf="@+id/dobText" />
+
+    <Button
+        android:id="@+id/deleteAllDataButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="Delete Data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/finishButton" />
+
+    <Button
+        android:id="@+id/goBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="Go Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/finishButton" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
