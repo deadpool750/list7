@@ -11,7 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="88dp"
+        android:cursorVisible="false"
+        android:focusable="false"
         android:text="Complete Your Profile"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,6 +26,7 @@
         android:layout_marginTop="16dp"
         android:hint="Name"
         android:textSize="16sp"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
@@ -38,6 +41,7 @@
         android:layout_marginTop="16dp"
         android:hint="Surname"
         android:textSize="16sp"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -52,6 +56,7 @@
         android:layout_marginTop="16dp"
         android:hint="Email"
         android:textSize="16sp"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -66,13 +71,13 @@
         android:layout_marginTop="16dp"
         android:hint="Address"
         android:textSize="16sp"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailInput"
         app:layout_constraintVertical_bias="0.0" />
-
 
     <EditText
         android:id="@+id/phoneInput"
@@ -81,6 +86,7 @@
         android:layout_marginTop="16dp"
         android:hint="Phone Number"
         android:textSize="16sp"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -88,17 +94,41 @@
         app:layout_constraintTop_toBottomOf="@+id/addressInput"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
+    <!--<Button
         android:id="@+id/finishButton"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="286dp"
         android:layout_marginBottom="24dp"
-        android:text="FINISH"
+        android:text="SAVE"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneInput"
-        app:layout_constraintVertical_bias="0.921" />
+        app:layout_constraintVertical_bias="0.921" />-->
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="376dp"
+        android:text="EDIT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_complete_your_profile" />
+
+    <Button
+        android:id="@+id/finishButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="159dp"
+        android:text="Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
