@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">list7</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="equipment1">Hiking Boots</string>
+    <string name="equipment2">Backpack</string>
+    <string name="equipment3">Hiking Shorts</string>
+    <string name="equipment4">Map and Compass</string>
+    <string name="equipment5">Portable Water Filter</string>
+    <string name="equipment6">Water Bottle(3L)</string>
+    <string name="equipment7">First Aid Kit</string>
+    <string name="equipment8">FireStarter Pack</string>
+    <string name="equipment9">Sleeping Bag</string>
+    <string name="equipment10">Bug Repellent</string>
+    <string name="equipment11">Trekking Poles</string>
 </resources>
