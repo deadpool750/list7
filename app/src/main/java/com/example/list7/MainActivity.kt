@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                     //if login is successful show a success message.
                     Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
 
-                    val intent = Intent(this, HomeActivity::class.java)
+                    val intent = Intent(this, HomeActivity1::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                     finish() // Close MainActivity to prevent going back to it
