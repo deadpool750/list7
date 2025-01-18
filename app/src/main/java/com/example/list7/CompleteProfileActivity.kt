@@ -53,7 +53,7 @@ class CompleteProfileActivity : AppCompatActivity() {
         val goBackButton = findViewById<Button>(R.id.goBackButton)
         goBackButton.setOnClickListener {
             // Intent to navigate back to HomeActivity
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, HomeActivity1::class.java)
             startActivity(intent)
             finish() // Finish the current activity to remove it from the back stack
         }
