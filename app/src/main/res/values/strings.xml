@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">My Hiker</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="google_maps_key">AIzaSyC04Ja7VKQkjXC2jL40U2jh-3zr0l_bZOY</string>
     <string name="equipment1">Hiking Boots</string>
     <string name="equipment2">Backpack</string>
     <string name="equipment3">Hiking Shorts</string>
