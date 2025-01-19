@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">list7</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="google_maps_key">AIzaSyA5U9xRGtqHkRGhq5TKvfJ5mWdRT3-n0ko</string>
+    <string name="google_maps_key"></string>
     <string name="back_button">Back</string>
     <string name="zoom_in">Zoom In</string>
     <string name="zoom_out">Zoom Out</string>
