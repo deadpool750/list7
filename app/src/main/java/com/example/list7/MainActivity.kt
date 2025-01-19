@@ -1,5 +1,6 @@
 package com.example.list7
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -17,8 +18,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Check if the user is already logged in
+        val sharedPreferences = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        if (sharedPreferences.getBoolean("isLoggedIn", false)) {
+            // Redirect to HomeActivity if already logged in
+            startActivity(Intent(this, HomeActivity1::class.java))
+            finish()
+        }
+
         //firebase authentication instance.
         auth = FirebaseAuth.getInstance()
+
 
         //finding views by their ids in the .xml file
         val loginButton = findViewById<Button>(R.id.loginButton)
@@ -38,6 +48,8 @@ class MainActivity : AppCompatActivity() {
 
             startActivity(intent)
         }
+
+
     }
 
     private fun isValidEmail(email: String): Boolean {
@@ -55,21 +67,29 @@ class MainActivity : AppCompatActivity() {
 
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
-                //firebases `signInWithEmailAndPassword` to attempt user login.
+                // Firebase `signInWithEmailAndPassword` to attempt user login
                 if (task.isSuccessful) {
-                    //if login is successful show a success message.
+                    // Save the user's login state in SharedPreferences
+                    val sharedPreferences = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+                    sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
+
+                    // Show a success message
                     Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
 
+                    // Navigate to HomeActivity
                     val intent = Intent(this, HomeActivity1::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                     finish() // Close MainActivity to prevent going back to it
-
                 } else {
-                    //if login fails show the error message from Firebase.
+                    // Show the error message from Firebase if login fails
                     Toast.makeText(this, "Login Failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
-    }
 
+    }
+    fun isUserLoggedIn(context: Context): Boolean {
+        val sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getBoolean("isLoggedIn", true)
+    }
 }
