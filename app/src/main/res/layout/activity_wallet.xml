@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".WalletActivity">
+
+    <!-- Card Number -->
+    <EditText
+        android:id="@+id/cardNumberInput"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="Card Number"
+        android:inputType="number"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_margin="16dp" />
+
+    <!-- Expiry Date -->
+    <EditText
+        android:id="@+id/expiryDateInput"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="Expiry Date (MM/YY)"
+        app:layout_constraintTop_toBottomOf="@id/cardNumberInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_margin="16dp" />
+
+    <!-- CVV -->
+    <EditText
+        android:id="@+id/cvvInput"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="CVV"
+        android:inputType="numberPassword"
+        app:layout_constraintTop_toBottomOf="@id/expiryDateInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_margin="16dp" />
+
+    <!-- Amount -->
+    <EditText
+        android:id="@+id/balanceInput"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="Enter Amount"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/cvvInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_margin="16dp" />
+
+    <!-- Add Balance Button -->
+    <Button
+        android:id="@+id/addBalanceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Balance"
+        app:layout_constraintTop_toBottomOf="@id/balanceInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_margin="16dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
