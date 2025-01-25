@@ -14,6 +14,7 @@ class ItemAdapter(private val context: Context, private val dataset: List<Equipm
         val textView : TextView = view.findViewById(R.id.item_title)
         val imageView : ImageView = view.findViewById(R.id.equipment_image)
         val priceView : TextView = view.findViewById(R.id.item_price)
+        val descriptionView : TextView = view.findViewById(R.id.description_textView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -30,5 +31,6 @@ class ItemAdapter(private val context: Context, private val dataset: List<Equipm
         holder.textView.text = context.resources.getString(item.stringResourceId)
         holder.imageView.setImageResource(item.imageResourceId)
         holder.priceView.text = item.priceId.toString()
+        holder.descriptionView.text = item.description
     }
 }

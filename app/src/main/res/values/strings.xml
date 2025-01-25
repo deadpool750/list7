@@ -17,4 +17,6 @@
     <string name="equipment9">Sleeping Bag</string>
     <string name="equipment10">Bug Repellent</string>
     <string name="equipment11">Trekking Poles</string>
+    <string name="price_zl">Price(zl)</string>
+    <string name="description">Description</string>
 </resources>
