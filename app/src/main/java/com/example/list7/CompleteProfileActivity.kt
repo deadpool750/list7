@@ -2,6 +2,7 @@ package com.example.list7
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -37,6 +38,12 @@ class CompleteProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_complete_profile)
         enableEdgeToEdge()
 
+        // Set up ActionBar with Up Button
+        supportActionBar?.apply {
+            title = "Complete Profile" // Set the title for the activity
+            setDisplayHomeAsUpEnabled(true) // Enable the up button
+        }
+
         // Initialize views
         nameInput = findViewById(R.id.nameInput)
         surnameInput = findViewById(R.id.surnameInput)
@@ -49,15 +56,6 @@ class CompleteProfileActivity : AppCompatActivity() {
         finishButton = findViewById(R.id.finishButton)
         editButton = findViewById(R.id.editButton)
         deleteButton = findViewById(R.id.deleteAllDataButton)
-
-        val goBackButton = findViewById<Button>(R.id.goBackButton)
-        goBackButton.setOnClickListener {
-            // Intent to navigate back to HomeActivity
-            val intent = Intent(this, HomeActivity1::class.java)
-            startActivity(intent)
-            finish() // Finish the current activity to remove it from the back stack
-        }
-
 
         val userId = auth.currentUser?.uid
 
@@ -121,7 +119,16 @@ class CompleteProfileActivity : AppCompatActivity() {
         }
     }
 
-
+    // Handle the Up Button press to navigate back
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> { // Up button clicked
+                finish() // Close the current activity and return to the previous one
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     private fun openDatePicker() {
         val calendar = Calendar.getInstance()
@@ -215,8 +222,6 @@ class CompleteProfileActivity : AppCompatActivity() {
         emailInput.isEnabled = enable
         phoneInput.isEnabled = enable
         addressInput.isEnabled = enable
-        //dobButton.isEnabled = enable
-        //finishButton.isEnabled = enable
         dobText.isEnabled = enable
         ageText.isEnabled = enable
     }

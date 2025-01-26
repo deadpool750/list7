@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,27 +17,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.List7"
         tools:targetApi="31">
-
+        <activity
+            android:name=".WalletActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CartActivity"
+            android:exported="false" />
         <activity
             android:name=".CreateOfferActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity1"
-            android:exported="false" />
-
-        <!-- Add your Google Maps API key here -->
+            android:exported="true" /> <!-- Add your Google Maps API key here -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="" />
-        <!-- Replace "YOUR_API_KEY" with your actual API key -->
-
+            android:value="AIzaSyA5U9xRGtqHkRGhq5TKvfJ5mWdRT3-n0ko" /> <!-- Replace "YOUR_API_KEY" with your actual API key -->
         <activity
             android:name=".MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".ShopActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:parentActivityName=".HomeActivity1" />
         <activity
             android:name=".CompleteProfileActivity"
             android:exported="false" />
@@ -44,6 +51,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
