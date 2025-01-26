@@ -5,19 +5,53 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
+    <!-- Item Name -->
     <TextView
         android:id="@+id/cart_item_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:text="Item Name"
         android:textSize="16sp"
         android:textStyle="bold" />
 
+    <!-- Item Price -->
     <TextView
         android:id="@+id/cart_item_price"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Price"
         android:textSize="16sp" />
+
+    <!-- Subtract Button -->
+    <Button
+        android:id="@+id/cart_item_subtract_button"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="-" />
+
+    <!-- Quantity Field -->
+    <EditText
+        android:id="@+id/cart_item_quantity"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:gravity="center"
+        android:text="1" />
+
+    <!-- Add Button -->
+    <Button
+        android:id="@+id/cart_item_add_button"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="+" />
+
+    <!-- Delete Button -->
+    <Button
+        android:id="@+id/cart_item_delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:textSize="14sp" />
 </LinearLayout>
