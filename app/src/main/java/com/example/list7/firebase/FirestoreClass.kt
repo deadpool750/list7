@@ -66,8 +66,12 @@ class FirestoreClass {
     ) {
         db.collection(collectionPath).get()
             .addOnSuccessListener { querySnapshot ->
-                val items = querySnapshot.documents.mapNotNull {
-                    it.data?.let { data -> Item.fromMap(data) }
+                val items = querySnapshot.documents.mapNotNull { document ->
+                    document.data?.let { data ->
+                        val item = Item.fromMap(data)
+                        item.uid = document.id // Assign Firestore document ID as uid
+                        item
+                    }
                 }
                 onSuccess(items)
             }
@@ -80,5 +84,52 @@ class FirestoreClass {
         for (itemId in itemIds) {
             collectionRef.document(itemId).delete().await()
         }
+    }
+
+    // Get Item Quantity from Firestore
+    suspend fun getItemQuantity(itemId: String): Int {
+        val itemRef = db.collection("items").document(itemId)
+        val snapshot = itemRef.get().await()
+        return snapshot.getLong("quantity")?.toInt() ?: 0
+    }
+
+    // Update Item Quantity in Firestore (subtracting purchased amount)
+    suspend fun subtractItemQuantity(itemId: String, quantityToSubtract: Int) {
+        val itemRef = db.collection("items").document(itemId)
+        val snapshot = itemRef.get().await()
+        val currentQuantity = snapshot.getLong("quantity")?.toInt() ?: 0
+
+        // Ensure the new quantity is non-negative
+        val newQuantity = (currentQuantity - quantityToSubtract).coerceAtLeast(0)
+
+        // Update the quantity in Firestore
+        itemRef.update("quantity", newQuantity).await()
+    }
+
+    // Generic method to fetch a single document
+    fun fetchDocument(
+        collectionPath: String,
+        documentId: String,
+        onSuccess: (Map<String, Any>?) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection(collectionPath).document(documentId).get()
+            .addOnSuccessListener { documentSnapshot ->
+                onSuccess(documentSnapshot.data)
+            }
+            .addOnFailureListener { onFailure(it) }
+    }
+
+    // Generic method to update fields in a document
+    fun updateDocumentFields(
+        collectionPath: String,
+        documentId: String,
+        updates: Map<String, Any>,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection(collectionPath).document(documentId).update(updates)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onFailure(it) }
     }
 }
