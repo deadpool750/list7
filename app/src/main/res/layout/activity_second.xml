@@ -127,7 +127,7 @@
         app:layout_constraintBottom_toTopOf="@+id/nameEditText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mountain" />
+        app:srcCompat="@drawable/logo2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
