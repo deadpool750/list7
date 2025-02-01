@@ -42,7 +42,7 @@
             android:parentActivityName=".HomeActivity1" />
         <activity
             android:name=".CompleteProfileActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".SecondActivity"
             android:exported="false" />
