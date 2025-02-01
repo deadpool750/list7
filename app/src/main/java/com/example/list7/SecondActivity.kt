@@ -10,17 +10,27 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * SecondActivity handles the user registration process, allowing users to sign up for an account.
+ * It validates the input fields, creates a new user using Firebase Authentication, and handles
+ * successful or failed registration attempts.
+ */
 class SecondActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
+    /**
+     * Initializes the activity, sets up the UI elements, and configures listeners for user input.
+     * It also handles user registration and navigates to the login screen upon successful registration.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
-        //firebaseAuth instance
+        // Firebase Authentication instance
         auth = FirebaseAuth.getInstance()
 
+        // Finding UI components by their IDs
         val nameEditText = findViewById<EditText>(R.id.nameEditText)
         val emailEditText = findViewById<EditText>(R.id.emailEditText)
         val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
@@ -29,15 +39,12 @@ class SecondActivity : AppCompatActivity() {
         val signUpButton = findViewById<Button>(R.id.loginButton)
         val loginTextView = findViewById<TextView>(R.id.clickableregisterTextView)
 
+        // Listener for the age switch, displaying "YES" or "NO"
         ageSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                ageSwitch.text = "YES"
-            } else {
-                ageSwitch.text = "NO"
-            }
+            ageSwitch.text = if (isChecked) "YES" else "NO"
         }
 
-        //listener for the Sign-Up button
+        // Listener for the Sign-Up button
         signUpButton.setOnClickListener {
             val name = nameEditText.text.toString().trim()
             val email = emailEditText.text.toString().trim()
@@ -45,8 +52,7 @@ class SecondActivity : AppCompatActivity() {
             val confirmPassword = passwordConfirmEditText.text.toString().trim()
             val isAbove18 = ageSwitch.isChecked
 
-            //ssdsds
-            //validating inputs
+            // Validate input fields
             if (name.isEmpty()) {
                 showToast("Please enter your name")
                 return@setOnClickListener
@@ -72,30 +78,35 @@ class SecondActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
+            // Create a new user using Firebase Authentication
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        //registration successful
+                        // Registration successful
                         showToast("Registration successful!")
-                        //navigate to another activity or log the user in
+                        // Navigate to the login screen
                         startActivity(Intent(this, MainActivity::class.java))
-                        finish()
+                        finish() // Close the registration activity
                     } else {
-                        //registration failed
+                        // Registration failed
                         showToast("Registration failed: ${task.exception?.message}")
                     }
                 }
         }
 
-        //navigating to login if log in textview is clicked
+        // Listener to navigate to the login screen if "Log In" text is clicked
         loginTextView.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish()
+            finish() // Close the registration activity
         }
     }
 
+    /**
+     * Displays a short toast message with the given text.
+     *
+     * @param message The message to display in the toast.
+     */
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

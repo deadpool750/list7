@@ -1,15 +1,23 @@
 package com.example.list7
 
+/**
+ * CartManager is responsible for managing the items in the user's cart, including adding,
+ * removing, updating quantities, and clearing the cart. It maintains the list of items in memory.
+ */
 object CartManager {
     private val cartItems = mutableListOf<Item>() // Changed to MutableList
 
     /**
-     * Get the list of items currently in the cart.
+     * Returns the list of items currently in the cart.
+     *
+     * @return A MutableList containing the items in the cart.
      */
     fun getCartItems(): MutableList<Item> = cartItems // Return MutableList
 
     /**
-     * Add an item to the cart.
+     * Adds an item to the cart. If the item is already in the cart, its quantity is incremented by 1.
+     *
+     * @param item The item to be added to the cart.
      */
     fun addItemToCart(item: Item) {
         val existingItem = cartItems.find { it.uid == item.uid }
@@ -22,23 +30,27 @@ object CartManager {
         }
     }
 
-
     /**
-     * Remove a specific item from the cart.
+     * Removes a specific item from the cart.
+     *
+     * @param item The item to be removed from the cart.
      */
     fun removeItem(item: Item) {
         cartItems.remove(item)
     }
 
     /**
-     * Clear all items from the cart.
+     * Clears all items from the cart.
      */
     fun clearCart() {
         cartItems.clear()
     }
 
     /**
-     * Update the quantity of a specific item in the cart.
+     * Updates the quantity of a specific item in the cart.
+     *
+     * @param itemId The unique ID of the item whose quantity is to be updated.
+     * @param newQuantity The new quantity to set for the item.
      */
     fun updateItemQuantity(itemId: String, newQuantity: Int) {
         val item = cartItems.find { it.uid == itemId }

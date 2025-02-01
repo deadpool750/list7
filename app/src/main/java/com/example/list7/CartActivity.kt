@@ -14,13 +14,23 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
+/**
+ * CartActivity handles the user's shopping cart, including displaying the items, updating quantities, and processing the purchase.
+ * It also integrates with Firebase to manage user balance and item quantities in Firestore.
+ */
 class CartActivity : AppCompatActivity() {
+
+    // Declare views and Firebase objects
     private lateinit var recyclerView: RecyclerView
     private lateinit var cartAdapter: CartAdapter
     private lateinit var buyButton: Button
     private val firestoreClass = FirestoreClass()
     private val auth = FirebaseAuth.getInstance()
 
+    /**
+     * Initializes the activity by setting up the RecyclerView, CartAdapter, and Buy button.
+     * Also sets the ActionBar title and home button.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
@@ -49,6 +59,11 @@ class CartActivity : AppCompatActivity() {
         buyButton.setOnClickListener { handlePurchase() }
     }
 
+    /**
+     * Handles the purchase process, including checking user balance, validating item quantities,
+     * and updating Firestore records.
+     * Displays Toast messages for success or errors during purchase.
+     */
     private fun handlePurchase() {
         val userId = auth.currentUser?.uid
         if (userId == null) {
@@ -112,6 +127,10 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Updates the item quantities in Firestore after a successful purchase.
+     * Subtracts the quantity of each item in the cart from the Firestore database.
+     */
     private suspend fun updateFirestoreItemQuantities() {
         val cartItems = CartManager.getCartItems()
         for (item in cartItems) {
@@ -132,6 +151,11 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Removes an item from the cart, updates the CartManager and RecyclerView, and shows a Toast message.
+     *
+     * @param item The item to be removed from the cart.
+     */
     private fun deleteItemFromCart(item: Item) {
         // Remove the item from CartManager
         CartManager.removeItem(item)
@@ -143,7 +167,12 @@ class CartActivity : AppCompatActivity() {
         Toast.makeText(this, "Item '${item.itemName}' removed from cart", Toast.LENGTH_SHORT).show()
     }
 
-
+    /**
+     * Updates the quantity of an item in the cart. If the quantity is zero or less, the item is removed.
+     *
+     * @param item The item whose quantity is being updated.
+     * @param newQuantity The new quantity for the item.
+     */
     private fun updateItemQuantityInCart(item: Item, newQuantity: Int) {
         if (newQuantity <= 0) {
             deleteItemFromCart(item) // Remove item if quantity is zero or less
@@ -153,10 +182,16 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Handles item selection from the ActionBar (e.g., the "home" button press).
+     *
+     * @param item The selected menu item.
+     * @return Boolean indicating whether the item was handled.
+     */
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                finish() // Finish the activity on pressing the home button
                 true
             }
             else -> super.onOptionsItemSelected(item)
