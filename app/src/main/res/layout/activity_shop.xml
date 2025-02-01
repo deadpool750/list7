@@ -8,8 +8,21 @@
         android:id="@+id/homeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/checkoutButton"
         android:padding="8dp" />
+
+    <Button
+        android:id="@+id/addOfferButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkoutButton"
+        android:layout_alignParentStart="true"
+        android:layout_margin="8dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="619dp"
+        android:backgroundTint="@color/purple_500"
+        android:text="Add Offer"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/checkoutButton"
@@ -17,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
-        android:text="Checkout"
         android:backgroundTint="@color/purple_500"
+        android:text="Checkout"
         android:textColor="@android:color/white" />
 </RelativeLayout>
