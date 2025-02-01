@@ -14,7 +14,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
+/**
+ * WalletActivity allows the user to add balance to their wallet using a valid credit card.
+ * It validates card details, ensures the entered amount is valid, and provides notifications
+ * to confirm the transaction. The activity also handles the request for notification permissions
+ * on Android versions where it is required (Android 13+).
+ */
 class WalletActivity : AppCompatActivity() {
+
     private lateinit var cardNumberInput: EditText
     private lateinit var expiryDateInput: EditText
     private lateinit var cvvInput: EditText
@@ -28,6 +35,11 @@ class WalletActivity : AppCompatActivity() {
         Triple("340000000000009", "03/27", "789")   // Card 3
     )
 
+    /**
+     * Initializes the activity, sets up the UI components, notification channel,
+     * and the click listener for the 'Add Balance' button. It also validates card information
+     * and handles adding balance when the button is clicked.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wallet)
@@ -71,10 +83,21 @@ class WalletActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Validates the entered card details against a predefined list of valid cards.
+     * @param cardNumber The card number entered by the user.
+     * @param expiryDate The expiry date entered by the user.
+     * @param cvv The CVV entered by the user.
+     * @return True if the card details are valid, otherwise false.
+     */
     private fun validateCard(cardNumber: String, expiryDate: String, cvv: String): Boolean {
         return validCards.any { it.first == cardNumber && it.second == expiryDate && it.third == cvv }
     }
 
+    /**
+     * Creates a notification channel for Android 8 and above. This channel is used to display
+     * wallet transaction notifications.
+     */
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
@@ -89,6 +112,10 @@ class WalletActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Displays a notification confirming the amount added to the wallet.
+     * @param amount The amount added to the wallet.
+     */
     private fun showNotification(amount: Int) {
         val builder = NotificationCompat.Builder(this, "wallet_notifications")
             .setSmallIcon(R.drawable.ic_wallet) // Ensure you have an icon named ic_wallet in res/drawable
@@ -101,6 +128,11 @@ class WalletActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Requests notification permission if needed (Android 13+).
+     * If permission is granted, it triggers the provided callback.
+     * @param onPermissionGranted Callback to be invoked if permission is granted.
+     */
     private fun requestNotificationPermission(onPermissionGranted: () -> Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(
@@ -124,6 +156,10 @@ class WalletActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Handles the result of the notification permission request.
+     * Displays a toast indicating whether the permission was granted or denied.
+     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -139,6 +175,11 @@ class WalletActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Handles the click of the home/up button in the ActionBar to finish the activity.
+     * @param item The menu item clicked.
+     * @return True if the item was handled, otherwise false.
+     */
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {

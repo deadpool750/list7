@@ -12,12 +12,21 @@ import androidx.core.app.NotificationCompat
 import com.example.firebaseauthdemo.firebase.FirestoreClass
 import com.example.list7.Item
 
+/**
+ * Activity for creating a new offer. Users can input item details such as name, price, quantity, and UID.
+ * Upon successful creation, a system notification is sent, and the offer is saved to Firestore.
+ */
 class CreateOfferActivity : AppCompatActivity() {
 
-    private val firestoreClass = FirestoreClass()
-    private val channelId = "offer_notifications"
-    private val notificationId = 1
+    private val firestoreClass = FirestoreClass() // Firestore instance for database operations
+    private val channelId = "offer_notifications" // Notification channel ID
+    private val notificationId = 1 // Unique ID for the notification
 
+    /**
+     * Called when the activity is created. Initializes the UI and sets up the notification channel.
+     *
+     * @param savedInstanceState The saved instance state of the activity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_offer)
@@ -83,7 +92,9 @@ class CreateOfferActivity : AppCompatActivity() {
         }
     }
 
-    // Create Notification Channel (Required for Android 8.0+)
+    /**
+     * Creates a notification channel for system notifications (required for Android 8.0+).
+     */
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
@@ -98,7 +109,11 @@ class CreateOfferActivity : AppCompatActivity() {
         }
     }
 
-    // Send System Notification
+    /**
+     * Sends a system notification to inform the user that an offer has been created.
+     *
+     * @param itemName The name of the item for which the offer was created.
+     */
     private fun sendSystemNotification(itemName: String) {
         val notificationManager = getSystemService(NotificationManager::class.java)
 
@@ -114,7 +129,11 @@ class CreateOfferActivity : AppCompatActivity() {
         notificationManager.notify(notificationId, notification)
     }
 
-    // Handle Back Button in ActionBar
+    /**
+     * Handles the Back Button in the ActionBar to navigate back to the previous activity.
+     *
+     * @return True to indicate the event was handled.
+     */
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true

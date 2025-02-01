@@ -10,13 +10,22 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * MainActivity handles the user login process, including verifying user credentials
+ * and managing login state using Firebase Authentication and SharedPreferences.
+ */
 class MainActivity : AppCompatActivity() {
-    //auth declaration for firebase
+
+    // Firebase authentication instance
     private lateinit var auth: FirebaseAuth
 
+    /**
+     * Initializes the activity, checks the login state, and sets up view elements and listeners.
+     * If the user is already logged in, they are redirected to HomeActivity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
+        supportActionBar?.hide() // Hides the action bar
         setContentView(R.layout.activity_main)
 
         // Check if the user is already logged in
@@ -27,41 +36,49 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        //firebase authentication instance.
+        // Initialize Firebase authentication
         auth = FirebaseAuth.getInstance()
 
-
-        //finding views by their ids in the .xml file
+        // Finding views by their ids in the layout
         val loginButton = findViewById<Button>(R.id.loginButton)
         val registerTextView = findViewById<TextView>(R.id.clickableregisterTextView)
 
+        // Listener for login button click
         loginButton.setOnClickListener {
-            //listener for the login button click.
             val email = findViewById<EditText>(R.id.emailEditText).text.toString()
             val password = findViewById<EditText>(R.id.passwordEditText).text.toString()
             loginUser(email, password)
         }
 
+        // Listener for register text view click
         registerTextView.setOnClickListener {
-            //if the register TextView is clicked, navigate to SecondActivity which is register.
+            // Navigate to SecondActivity for user registration
             val intent = Intent(this, SecondActivity::class.java)
-            //intent to navigate to SecondActivity.
-
             startActivity(intent)
         }
-
-
     }
 
+    /**
+     * Checks if the provided email is in a valid format using Android's built-in email pattern.
+     *
+     * @param email The email to validate.
+     * @return Boolean indicating whether the email is valid.
+     */
     private fun isValidEmail(email: String): Boolean {
-        //checking if the email is valid
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
+    /**
+     * Attempts to log in the user using Firebase Authentication with the provided email and password.
+     * Displays a success or failure message based on the result of the login attempt.
+     *
+     * @param email The email of the user.
+     * @param password The password of the user.
+     */
     private fun loginUser(email: String, password: String) {
 
         if (!isValidEmail(email)) {
-            //check if email format is valid
+            // Show a Toast message if the email format is invalid
             Toast.makeText(this, "Invalid Email Format", Toast.LENGTH_SHORT).show()
             return
         }
@@ -87,10 +104,17 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Login Failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
-
     }
+
+    /**
+     * Checks if the user is currently logged in by reading the login state from SharedPreferences.
+     *
+     * @param context The context to access SharedPreferences.
+     * @return Boolean indicating whether the user is logged in.
+     */
     fun isUserLoggedIn(context: Context): Boolean {
         val sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         return sharedPreferences.getBoolean("isLoggedIn", true)
     }
 }
+

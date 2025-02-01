@@ -1,16 +1,29 @@
 package com.example.firebaseauthdemo.firebase
+
 import com.example.list7.Item
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
+/**
+ * FirestoreClass provides methods to interact with Firestore for user and item management.
+ */
 class FirestoreClass {
     private val db = FirebaseFirestore.getInstance()
 
-    // Add or Update User Data
+    /**
+     * Adds or updates user data in Firestore.
+     * @param userId The ID of the user.
+     * @param userData A map containing user data fields.
+     */
     suspend fun addUserData(userId: String, userData: Map<String, Any>) {
         db.collection("users").document(userId).set(userData).await()
     }
 
+    /**
+     * Updates user data if it exists, otherwise creates a new document.
+     * @param userId The ID of the user.
+     * @param userData A map containing user data fields.
+     */
     suspend fun updateUserData(userId: String, userData: Map<String, Any>) {
         val documentRef = db.collection("users").document(userId)
         val documentSnapshot = documentRef.get().await()
@@ -22,30 +35,51 @@ class FirestoreClass {
         }
     }
 
-    // Load User Data
+    /**
+     * Loads user data from Firestore.
+     * @param userId The ID of the user.
+     * @return A map containing user data if found, otherwise null.
+     */
     suspend fun loadUserData(userId: String): Map<String, Any>? {
         return db.collection("users").document(userId).get().await().data
     }
 
-    // Delete User Data
+    /**
+     * Deletes a user's data from Firestore.
+     * @param userId The ID of the user.
+     */
     suspend fun deleteUserData(userId: String) {
         db.collection("users").document(userId).delete().await()
     }
 
-    // Update User Balance (now accepts Double)
+    /**
+     * Updates the user's balance.
+     * @param userId The ID of the user.
+     * @param newBalance The updated balance value.
+     */
     suspend fun updateUserBalance(userId: String, newBalance: Double) {
         val userRef = db.collection("users").document(userId)
         userRef.update("balance", newBalance).await()
     }
 
-    // Get User Balance
+    /**
+     * Retrieves the user's balance.
+     * @param userId The ID of the user.
+     * @return The user's balance as a Double.
+     */
     suspend fun getUserBalance(userId: String): Double {
         val userRef = db.collection("users").document(userId)
         val snapshot = userRef.get().await()
         return snapshot.getLong("balance")?.toDouble() ?: 0.0
     }
 
-    // Add Item to a Firestore Collection
+    /**
+     * Adds an item to the Firestore collection.
+     * @param collectionPath The path of the Firestore collection.
+     * @param item The item to add.
+     * @param onSuccess Callback executed on successful addition.
+     * @param onFailure Callback executed on failure.
+     */
     fun addItem(
         collectionPath: String,
         item: Item,
@@ -57,7 +91,12 @@ class FirestoreClass {
             .addOnFailureListener { onFailure(it) }
     }
 
-    // Load Items from a Firestore Collection
+    /**
+     * Loads items from a Firestore collection.
+     * @param collectionPath The path of the Firestore collection.
+     * @param onSuccess Callback executed with a list of retrieved items.
+     * @param onFailure Callback executed on failure.
+     */
     fun loadItems(
         collectionPath: String,
         onSuccess: (List<Item>) -> Unit,
@@ -77,7 +116,11 @@ class FirestoreClass {
             .addOnFailureListener { onFailure(it) }
     }
 
-    // Delete Items from a Firestore Collection
+    /**
+     * Deletes items from a Firestore collection.
+     * @param collectionPath The path of the Firestore collection.
+     * @param itemIds The list of item IDs to delete.
+     */
     suspend fun deleteItems(collectionPath: String, itemIds: List<String>) {
         val collectionRef = db.collection(collectionPath)
         for (itemId in itemIds) {
@@ -85,27 +128,33 @@ class FirestoreClass {
         }
     }
 
-    // Get Item Quantity from Firestore
+    /**
+     * Retrieves the quantity of an item from Firestore.
+     * @param itemId The ID of the item.
+     * @return The quantity of the item.
+     */
     suspend fun getItemQuantity(itemId: String): Int {
         val itemRef = db.collection("items").document(itemId)
         val snapshot = itemRef.get().await()
         return snapshot.getLong("quantity")?.toInt() ?: 0
     }
 
-    // Update Item Quantity in Firestore (subtracting purchased amount)
+    /**
+     * Updates the quantity of an item in Firestore by subtracting a specified amount.
+     * @param itemId The ID of the item.
+     * @param quantityToSubtract The amount to subtract from the current quantity.
+     */
     suspend fun subtractItemQuantity(itemId: String, quantityToSubtract: Int) {
         val itemRef = db.collection("items").document(itemId)
         val snapshot = itemRef.get().await()
         val currentQuantity = snapshot.getLong("quantity")?.toInt() ?: 0
-
-        // Ensure the new quantity is non-negative
         val newQuantity = (currentQuantity - quantityToSubtract).coerceAtLeast(0)
-
-        // Update the quantity in Firestore
         itemRef.update("quantity", newQuantity).await()
     }
 
-    // Generic method to fetch a single document
+    /**
+     * Fetches a single document from Firestore.
+     */
     fun fetchDocument(
         collectionPath: String,
         documentId: String,
@@ -119,7 +168,9 @@ class FirestoreClass {
             .addOnFailureListener { onFailure(it) }
     }
 
-    // Generic method to update fields in a document
+    /**
+     * Updates specific fields in a Firestore document.
+     */
     fun updateDocumentFields(
         collectionPath: String,
         documentId: String,

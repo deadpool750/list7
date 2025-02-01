@@ -18,6 +18,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 
+/**
+ * MapsActivity handles the display of a Google Map with custom markers, allowing the user
+ * to view and search for stores by name. It uses the Google Maps API and Places API.
+ */
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
@@ -34,6 +38,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         "Store 4" to LatLng(51.1065, 17.0580)
     )
 
+    /**
+     * Initializes the activity, sets up the map, and configures the search bar.
+     * Also initializes the Places API and prepares the map for use.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,6 +64,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setupSearchBar()
     }
 
+    /**
+     * Called when the map is ready to be used. It configures the map's settings,
+     * adds markers for the default location and stores, and enables location tracking.
+     *
+     * @param googleMap The GoogleMap object to be configured.
+     */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -75,6 +89,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         addStoreMarkers()
     }
 
+    /**
+     * Enables the user's location on the map, if the appropriate permissions are granted.
+     * If permissions are not granted, the map will use the default location.
+     */
     private fun enableUserLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION
@@ -89,6 +107,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.isMyLocationEnabled = true
     }
 
+    /**
+     * Sets up the search bar to allow users to search for store locations by name.
+     * When a search query is submitted, it attempts to move the map to the specified location.
+     */
     private fun setupSearchBar() {
         val searchView = binding.searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -105,6 +127,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         })
     }
 
+    /**
+     * Searches for a store by its name and moves the map to that location.
+     * If the store is found, it adds a marker for the store and zooms the camera.
+     * If the store is not found, it displays a toast message.
+     *
+     * @param locationName The name of the store to search for.
+     */
     private fun searchLocation(locationName: String) {
         val location = storeLocations[locationName]
 
@@ -121,6 +150,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    /**
+     * Adds markers for the predefined store locations on the map.
+     */
     private fun addStoreMarkers() {
         // Add markers for the 4 imaginary stores
         for ((storeName, storeLocation) in storeLocations) {
@@ -132,6 +164,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    /**
+     * Handles item selections in the options menu. Specifically, it handles the back button
+     * action to finish the current activity and return to the previous one.
+     *
+     * @param item The menu item that was selected.
+     * @return True if the item was handled, otherwise false.
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {

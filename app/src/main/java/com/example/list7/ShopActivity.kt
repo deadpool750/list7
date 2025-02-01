@@ -13,12 +13,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * ShopActivity manages the shopping functionality, allowing users to view items, add them to the cart,
+ * and proceed to checkout. It interacts with Firestore to load items and update the quantities, and
+ * displays items in a RecyclerView. The activity also handles navigation to the offer creation screen.
+ */
 class ShopActivity : AppCompatActivity() {
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var itemAdapter: ItemAdapter
     private val itemList = mutableListOf<Item>()
     private val firestoreClass = FirestoreClass()
 
+    /**
+     * Initializes the activity, sets up the RecyclerView with item data, and configures buttons for
+     * checkout and offer creation. It also loads items from Firestore to display in the RecyclerView.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
@@ -41,8 +51,8 @@ class ShopActivity : AppCompatActivity() {
             handleCheckout()
         }
 
+        // Navigate to CreateOfferActivity when the add offer button is clicked
         findViewById<Button>(R.id.addOfferButton).setOnClickListener {
-            // Navigate to CreateOfferActivity
             val intent = Intent(this, CreateOfferActivity::class.java)
             startActivity(intent)
         }
@@ -51,6 +61,10 @@ class ShopActivity : AppCompatActivity() {
         loadItems()
     }
 
+    /**
+     * Loads items from the Firestore database and updates the RecyclerView with the fetched items.
+     * Displays a toast message if loading the items fails.
+     */
     private fun loadItems() {
         firestoreClass.loadItems(
             collectionPath = "items",
@@ -65,6 +79,11 @@ class ShopActivity : AppCompatActivity() {
         )
     }
 
+    /**
+     * Handles the logic of adding an item to the cart. If the item is in stock, it is added to the cart
+     * and Firestore is updated to reflect the new quantity. Displays a toast message when the item is added.
+     * If there is an error while updating Firestore, the item is removed from the cart and an error message is shown.
+     */
     private fun handleAddToCart(item: Item) {
         if (item.quantity <= 0) {
             // Notify the user if the item is out of stock
@@ -103,6 +122,10 @@ class ShopActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Handles the checkout process. If there are items in the cart, navigates to the CartActivity.
+     * If the cart is empty, shows a toast message indicating so.
+     */
     private fun handleCheckout() {
         if (CartManager.getCartItems().isNotEmpty()) {
             startActivity(Intent(this, CartActivity::class.java))
@@ -110,7 +133,4 @@ class ShopActivity : AppCompatActivity() {
             Toast.makeText(this, "Your cart is empty", Toast.LENGTH_SHORT).show()
         }
     }
-
-
-
 }
