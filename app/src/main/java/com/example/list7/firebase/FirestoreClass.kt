@@ -1,5 +1,4 @@
 package com.example.firebaseauthdemo.firebase
-
 import com.example.list7.Item
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -33,17 +32,17 @@ class FirestoreClass {
         db.collection("users").document(userId).delete().await()
     }
 
-    // Update User Balance
-    suspend fun updateUserBalance(userId: String, newBalance: Int) {
+    // Update User Balance (now accepts Double)
+    suspend fun updateUserBalance(userId: String, newBalance: Double) {
         val userRef = db.collection("users").document(userId)
         userRef.update("balance", newBalance).await()
     }
 
     // Get User Balance
-    suspend fun getUserBalance(userId: String): Int {
+    suspend fun getUserBalance(userId: String): Double {
         val userRef = db.collection("users").document(userId)
         val snapshot = userRef.get().await()
-        return snapshot.getLong("balance")?.toInt() ?: 0
+        return snapshot.getLong("balance")?.toDouble() ?: 0.0
     }
 
     // Add Item to a Firestore Collection

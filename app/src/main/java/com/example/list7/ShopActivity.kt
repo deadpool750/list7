@@ -41,6 +41,12 @@ class ShopActivity : AppCompatActivity() {
             handleCheckout()
         }
 
+        findViewById<Button>(R.id.addOfferButton).setOnClickListener {
+            // Navigate to CreateOfferActivity
+            val intent = Intent(this, CreateOfferActivity::class.java)
+            startActivity(intent)
+        }
+
         // Load items from Firestore
         loadItems()
     }
@@ -104,4 +110,7 @@ class ShopActivity : AppCompatActivity() {
             Toast.makeText(this, "Your cart is empty", Toast.LENGTH_SHORT).show()
         }
     }
+
+
+
 }
