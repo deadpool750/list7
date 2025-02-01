@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 class HomeActivity1 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         enableEdgeToEdge()
         setContentView(R.layout.activity_home1)
 
