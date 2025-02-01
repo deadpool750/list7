@@ -124,7 +124,7 @@ class WalletActivity : AppCompatActivity() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(NotificationManagerCompat.from(this)) {
-            notify(1, builder.build())
+            notify(1, builder.build()) //error because of permission handling but we're ignoring it
         }
     }
 
