@@ -29,6 +29,14 @@ class SecondActivity : AppCompatActivity() {
         val signUpButton = findViewById<Button>(R.id.loginButton)
         val loginTextView = findViewById<TextView>(R.id.clickableregisterTextView)
 
+        ageSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                ageSwitch.text = "YES"
+            } else {
+                ageSwitch.text = "NO"
+            }
+        }
+
         //listener for the Sign-Up button
         signUpButton.setOnClickListener {
             val name = nameEditText.text.toString().trim()
@@ -64,7 +72,7 @@ class SecondActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            //registration TODO
+
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {

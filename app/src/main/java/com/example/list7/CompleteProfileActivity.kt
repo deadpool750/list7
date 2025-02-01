@@ -1,11 +1,11 @@
 package com.example.list7
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -13,18 +13,18 @@ import com.example.firebaseauthdemo.firebase.FirestoreClass
 import com.example.list7.firebase.User
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-import android.app.DatePickerDialog
 import java.util.Calendar
 
 class CompleteProfileActivity : AppCompatActivity() {
+    // Ensure correct type: TextView for non-editable fields, EditText for input fields
     private lateinit var nameInput: EditText
     private lateinit var surnameInput: EditText
     private lateinit var emailInput: EditText
     private lateinit var phoneInput: EditText
     private lateinit var addressInput: EditText
     private lateinit var dobButton: Button
-    private lateinit var dobText: EditText
-    private lateinit var ageText: EditText
+    private lateinit var dobText: TextView // Use TextView since DOB is displayed, not typed
+    private lateinit var ageText: TextView // Use TextView for age display
     private lateinit var finishButton: Button
     private lateinit var editButton: Button
     private lateinit var deleteButton: Button
@@ -40,19 +40,19 @@ class CompleteProfileActivity : AppCompatActivity() {
 
         // Set up ActionBar with Up Button
         supportActionBar?.apply {
-            title = "Complete Profile" // Set the title for the activity
-            setDisplayHomeAsUpEnabled(true) // Enable the up button
+            title = "Complete Profile"
+            setDisplayHomeAsUpEnabled(true)
         }
 
-        // Initialize views
+        // Initialize views correctly
         nameInput = findViewById(R.id.nameInput)
         surnameInput = findViewById(R.id.surnameInput)
         emailInput = findViewById(R.id.emailInput)
         phoneInput = findViewById(R.id.phoneInput)
         addressInput = findViewById(R.id.addressInput)
         dobButton = findViewById(R.id.dobButton)
-        dobText = findViewById(R.id.dobText)
-        ageText = findViewById(R.id.ageText)
+        dobText = findViewById(R.id.dobText) // Should be a TextView
+        ageText = findViewById(R.id.ageText) // Should be a TextView
         finishButton = findViewById(R.id.finishButton)
         editButton = findViewById(R.id.editButton)
         deleteButton = findViewById(R.id.deleteAllDataButton)
@@ -60,25 +60,28 @@ class CompleteProfileActivity : AppCompatActivity() {
         val userId = auth.currentUser?.uid
 
         if (userId != null) {
-            // Load user data from Firestore
             lifecycleScope.launch {
                 try {
                     val userData = firestoreClass.loadUserData(userId)
                     if (userData != null) {
                         val user = User.fromMap(userData)
-                        nameInput.setText(user.name)
-                        surnameInput.setText(user.surname)
-                        emailInput.setText(user.email)
-                        phoneInput.setText(user.phoneNumber)
-                        addressInput.setText(user.address)
-                        selectedDateOfBirth = user.dateOfBirth
-                        dobText.setText(selectedDateOfBirth)
-                        ageText.setText("Age: ${calculateAge(selectedDateOfBirth ?: "")}")
+
+                        // Safely assign data to fields
+                        nameInput.setText(user.name ?: "")
+                        surnameInput.setText(user.surname ?: "")
+                        emailInput.setText(user.email ?: "")
+                        phoneInput.setText(user.phoneNumber ?: "")
+                        addressInput.setText(user.address ?: "")
+                        selectedDateOfBirth = user.dateOfBirth ?: ""
+
+                        dobText.text = selectedDateOfBirth ?: "Not Set"
+                        ageText.text = "Age: ${calculateAge(selectedDateOfBirth ?: "")}"
                     } else {
                         Toast.makeText(this@CompleteProfileActivity, "User data not found", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
-                    Toast.makeText(this@CompleteProfileActivity, "Error loading user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("Firestore", "Error loading user data", e)
+                    Toast.makeText(this@CompleteProfileActivity, "Error loading data", Toast.LENGTH_SHORT).show()
                 }
             }
         } else {
@@ -122,8 +125,8 @@ class CompleteProfileActivity : AppCompatActivity() {
     // Handle the Up Button press to navigate back
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> { // Up button clicked
-                finish() // Close the current activity and return to the previous one
+            android.R.id.home -> {
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -139,16 +142,16 @@ class CompleteProfileActivity : AppCompatActivity() {
             this,
             { _, selectedYear, selectedMonth, selectedDay ->
                 selectedDateOfBirth = "$selectedYear-${selectedMonth + 1}-$selectedDay"
-                dobText.setText(selectedDateOfBirth)
+                dobText.text = selectedDateOfBirth
+
                 // Calculate and display age
                 val age = calculateAge(selectedDateOfBirth ?: "")
-                ageText.setText("Age: $age")
+                ageText.text = "Age: $age"
             },
             year,
             month,
             day
         )
-        // Restrict selection to past dates only
         datePickerDialog.datePicker.maxDate = calendar.timeInMillis
         datePickerDialog.show()
     }
@@ -161,7 +164,6 @@ class CompleteProfileActivity : AppCompatActivity() {
         val birthDay = parts[2].toInt()
         val today = Calendar.getInstance()
         var age = today.get(Calendar.YEAR) - birthYear
-        // Adjust age if the current date is before the birthday
         if (today.get(Calendar.MONTH) < birthMonth - 1 ||
             (today.get(Calendar.MONTH) == birthMonth - 1 && today.get(Calendar.DAY_OF_MONTH) < birthDay)
         ) {
@@ -196,7 +198,8 @@ class CompleteProfileActivity : AppCompatActivity() {
             firestoreClass.updateUserData(userId, updatedData)
             Toast.makeText(this@CompleteProfileActivity, "User data updated successfully", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
-            Toast.makeText(this@CompleteProfileActivity, "Error updating user data: ${e.message}", Toast.LENGTH_SHORT).show()
+            Log.e("FirestoreUpdate", "Error updating user data: ${e.message}")
+            Toast.makeText(this@CompleteProfileActivity, "Error updating user data", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -207,12 +210,12 @@ class CompleteProfileActivity : AppCompatActivity() {
 
             auth.signOut()
 
-            // Navigate back to MainActivity
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         } catch (e: Exception) {
-            Toast.makeText(this@CompleteProfileActivity, "Error deleting user data: ${e.message}", Toast.LENGTH_SHORT).show()
+            Log.e("FirestoreDelete", "Error deleting user data: ${e.message}")
+            Toast.makeText(this@CompleteProfileActivity, "Error deleting user data", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -222,7 +225,5 @@ class CompleteProfileActivity : AppCompatActivity() {
         emailInput.isEnabled = enable
         phoneInput.isEnabled = enable
         addressInput.isEnabled = enable
-        dobText.isEnabled = enable
-        ageText.isEnabled = enable
     }
 }
