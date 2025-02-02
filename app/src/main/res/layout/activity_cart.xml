@@ -4,13 +4,29 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
+    <!-- RecyclerView for displaying cart items -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/buyButton"
+        android:layout_above="@+id/totalAmountTextView"
         android:padding="8dp" />
 
+    <!-- Total Amount TextView -->
+    <TextView
+        android:id="@+id/totalAmountTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buyButton"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:text="Total: $0.00"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="#EEEEEE"
+        android:textColor="@android:color/black" />
+
+    <!-- Buy Button -->
     <Button
         android:id="@+id/buyButton"
         android:layout_width="match_parent"
